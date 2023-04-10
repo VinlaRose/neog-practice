@@ -1,67 +1,10 @@
 
-import { useState, useEffect} from 'react';
+import { useEffect, useState } from 'react';
+// import { Question7, Question5, Trial, Question2, Question3, Question4 } from './Practice5';
 
 
+//---------------------------------------QUESTION 1 Discuss it!!!!!!
 const fakeFetch1 = (url) => {
-  return new Promise((resolve, reject) => {
-    setTimeout(() => {
-      if (url === 'https://example.com/api/users/status') {
-        resolve({
-          status: 200,
-          message: 'Success',
-          data: {
-            users: [
-              { name: 'Raju', status: 'Online' },
-              { name: 'Pankaj', status: 'Offline' },
-              { name: 'Sakshi', status: 'Offline' },
-              { name: 'Kishore', status: 'Offline' },
-            ],
-          },
-        })
-      } else {
-        reject({
-          status: 404,
-          message: 'No users Found',
-        })
-      }
-    }, 2000)
-  })
-}
-
-function Trial(){
-  const [items, setItems] = useState([])
-  useEffect(() => {
-    
-    getData()
-  }, [])
-  
-  const getData = async() => {
-    try{
-      const response = await fakeFetch1('https://example.com/api/users/status');
-      if(response.status === 200){
-          setItems(response.data.users);
-      }
-    }catch(e){
-      console.error(e);
-    }
-  }
-  
-  return(
-    <>
-    <p>Question1</p>
-    <ul>
-      {
-        items.map((prod) => {
-          return (
-            <li key = {prod.id} style = {{color: prod.status === "Offline" ?  "red" : "green"}}>{prod.name}</li>
-          )
-        })
-      }
-    </ul>
-    </>
-  )
-}
-const fakeFetch2 = (url) => {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
       if (url === 'https://example.com/api/products') {
@@ -70,10 +13,26 @@ const fakeFetch2 = (url) => {
           message: 'Success',
           data: {
             products: [
-              { name: 'Color Pencils', price: 50, quantity: 40 },
-              { name: 'Sketchpens', price: 110, quantity: 20 },
-              { name: 'Erasor', price: 20, quantity: 20 },
-              { name: 'Sharpner', price: 22, quantity: 30 },
+              {
+                name: 'Shoes',
+                price: 3000,
+                desc: 'lorem ipsum dolor sit amit',
+                src: 'https://picsum.photos/200/200',
+              },
+              {
+                name: 'Tshirt',
+                price: 500,
+                inStock: false,
+                desc: 'lorem ipsum dolor sit amit',
+                src: 'https://picsum.photos/201/201',
+              },
+              {
+                name: 'Trekking Bag',
+                price: 2000,
+                inStock: true,
+                desc: 'lorem ipsum dolor sit amit',
+                src: 'https://picsum.photos/205/205',
+              },
             ],
           },
         })
@@ -86,290 +45,163 @@ const fakeFetch2 = (url) => {
     }, 2000)
   })
 }
+function Question1(){
+const [items, setItems] = useState([]);
+const [buttons, setButtons] = useState([]);
+const [display, setDisplay] = useState("");
 
-const Question2 = () => {
-  const [items, setItems] = useState([])
-  const getData = async () =>{
-    try {const response =  await fakeFetch2('https://example.com/api/products');
-    if(response.status === 200){
-      setItems(response.data.products);
-    }
-  }catch(e){
-    console.error(e)
-  }
-  }
-
-  useEffect(() => {
-    getData();
-  }, [])
-
-  const handleClick = () =>{
-    const filteredItems = items.filter((item) => item.quantity > 20)
-    setItems(filteredItems)
-  }
-
-
-  return(
-  <>
-  <p>Question 2</p>
-  <button onClick = {handleClick}>Show Products with quantity more than 20</button>
-  <ul>
-    {
-      items.map((item) => <li>{item.name}--INR {item.price}--{item.quantity}</li>)
-    }
-  </ul>
-  </>  
-)
-}
-
-
-
-const Question3 = () => {
-  const [items, setItems] = useState([])
-  const getData = async () =>{
-    try {const response =  await fakeFetch2('https://example.com/api/products');
-    if(response.status === 200){
-      setItems(response.data.products);
-      console.log(response.data.products);
-    }
-  }catch(e){
-    console.error(e)
-  }
-  }
-
-  useEffect(() => {
-    getData();
-  }, [])
-
-  const handleClick = () =>{
-    const filteredItems = items.filter((item) => item.price < 100)
-    setItems(filteredItems)
-  }
-
-
-  return(
-  <>
-  <p>Question 3</p>
-  <button onClick = {handleClick}>Filter by price less than 100</button>
-  <ul>
-    {
-      items.map((item) => <li key = {item.name}>{item.name}--INR {item.price}--{item.quantity}</li>)
-    }
-  </ul>
-  </>  
-)
-}
-
-const fakeFetch4 = (url) => {
-  return new Promise((resolve, reject) => {
-    setTimeout(() => {
-      if (url === 'https://example.com/api/user') {
-        resolve({
-          status: 200,
-          message: 'Success',
-          data: {
-            name: 'Saroj',
-            image:
-              'https://cdn.pixabay.com/photo/2016/07/11/15/43/woman-1509956_1280.jpg',
-            likes: 500,
-            comments: 10,
-          },
-        })
-      } else {
-        reject({
-          status: 404,
-          message: 'user data not found.',
-        })
-      }
-    }, 3000)
-  })
-}
-
-function Question4({height, width, heading}){
-  const [items, setItems] = useState([]);
-  const getData = async () => {
-   try{
-    const response = await fakeFetch4('https://example.com/api/user');
-    setItems(response.data);
-    console.log(response.data);
-   }catch(e){
-    console.error(e)
-   }
-  }
-  useEffect(()=>{
-    getData();
-  },[])
-
-
-  return (
-    <>
-    <p>Question 4</p>
-    <h1>{heading}</h1>
-      <h2>{items.name}</h2>
-      <img src={items.image} alt="flower" style = {{height: height , width: width}} />
-      <p>Likes: {items.likes}</p>
-      <p>Comments: {items.comments}</p>
-    </>
-  )
-}
-
-
-// You can use your own images if you wish
-
-export const fakeFetch5 = (url) => {
-  return new Promise((resolve, reject) => {
-    setTimeout(() => {
-      if (url === 'https://example.com/api/users') {
-        resolve({
-          status: 200,
-          message: 'Success',
-          data: [
-            {
-              name: 'Saroj',
-              image:
-                'https://cdn.pixabay.com/photo/2017/06/13/13/06/girl-2398822_1280.jpg',
-              likes: 500,
-              comments: 10,
-            },
-            {
-              name: 'Meeta',
-              image:
-                'https://cdn.pixabay.com/photo/2017/06/13/13/06/girl-2398822_1280.jpg',
-              likes: 200,
-              comments: 1,
-            },
-            {
-              name: 'Alia',
-              image:
-                'https://cdn.pixabay.com/photo/2017/06/13/13/06/girl-2398822_1280.jpg',
-              likes: 100,
-              comments: 5,
-            },
-          ],
-        })
-      } else {
-        reject({
-          status: 404,
-          message: 'users data not found.',
-        })
-      }
-    }, 2000)
-  })
-}
-
-function Question5(){
-  const [items, setItems] = useState([]);
-  const [loading, setLoading] = useState(false)
- const getData = async() => {
+const getData = async() => {
   try{
-    setLoading(true);
-    const response = await fakeFetch5('https://example.com/api/users');
+    const response = await fakeFetch1("https://example.com/api/products");
+   setButtons(response.data.products);
+  setItems(response.data.products)
     
-    setItems(response.data);
-    
-    
-    setLoading(false);
   }catch(e){
-    console.error(e)
+    console.error(e);
   }
- }
+}
 
 useEffect(()=>{
-  getData()
+getData();
 },[])
+ 
+const buttonHandler = (name) => {
+  const filter = items.find((item) => item.name === name);
+  console.log(filter);
+  setDisplay(filter);
+ 
+  
+}
+
 
   return(
     <>
-    <p>Question 5</p>
-    {loading && <p style={{color: "red"}}>"Data is Loading..."</p>}
-  
-   <ul>
-    {
-      items.map((item) => <li>
-      <img src={item.image} alt="flower" style = {{height: "200px" , width:  "200px"}} /><p>{item.name}</p>
-      <p>Likes: {item.likes}</p><p>Comments: {item.comments}</p></li>)
-    }
-   </ul>
+    <h2>Question1</h2>
+    <ul>
+      {
+        buttons.map((item) => <button key={item.name} onClick = {() => buttonHandler(item.name)}>Show {item.name}</button>)
+      }
+      
+    </ul>
+    <img src={display.src} alt="flower" style={{ height: "200px", width: "200px" }}/>
+   <h2>{display.name}</h2>
+   <h2>Price: {display.price}</h2>
+   <h2>{display.desc}</h2>
     </>
   )
 }
 
-export const fakeFetch7 = (url) => {
+//---------------------------------------QUESTION 2
+
+
+
+//---------------------------------------QUESTION 3
+const fakeFetch3 = (url) => {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
-      if (url === 'https://example.com/api/comments') {
+      if (url === 'https://example.com/api/habits') {
         resolve({
           status: 200,
           message: 'Success',
           data: {
-            comments: [
+            habits: [
               {
-                name: 'Raju',
-                text: 'Hello how are you long time no see!!!'
+                title: 'Drinking enough water',
+                desc: 'Aim to drink 5-6L of water each day to stay hydrated',
+                daysFollowed: 7,
+                daysSkipped: 3,
               },
-              { name: 'Pankaj', text: 'Party when??' },
-              { name: 'Sakshi', text: 'Where are you currently staying' },
-              { name: 'Kishore', text: 'Hello Buddy!!' },
+              {
+                title: 'Exercise',
+                desc: 'Track your workouts and aim to exercise a certain number of days per week',
+                daysFollowed: 10,
+                daysSkipped: 4,
+              },
+              {
+                title: 'Meditation',
+                desc: 'Track your daily meditation practice and try to increase the length of your sessions over time',
+                daysFollowed: 30,
+                daysSkipped: 7,
+              },
+              {
+                title: 'Gratitude',
+                desc: 'Write down something you are grateful for each day',
+                daysFollowed: 11,
+                daysSkipped: 5,
+              },
+              {
+                title: 'Saving Money',
+                desc: 'Track your expenses and set a goal to save a certain amount of money each month',
+                daysFollowed: 40,
+                daysSkipped: 15,
+              },
             ],
           },
         })
       } else {
         reject({
           status: 404,
-          message: 'No comments Found',
+          message: 'Habits not found.',
         })
       }
     }, 2000)
   })
 }
 
-function Question7(){
-  const [items, setItems] = useState([]);
+function Question3(){
+
+  const [items, setItems] = useState([])
+
 
   const getData = async() => {
-   try{ const response = await fakeFetch7('https://example.com/api/comments');
-   setItems(response.data.comments);
-  }catch(e){
-    console.error(e);
-  }
+    const response = await fakeFetch3('https://example.com/api/habits');
+    setItems(response.data.habits)
 
   }
 
   useEffect(() => {
     getData();
-  }, [])
-const handler = (name) => {
-const filtered = items.filter((item) => item.name !== name);
-setItems(filtered)
-}
+  },[])
+
   return(
     <>
-    <p>Question 7 Chatting</p>
     <ul>
       {
-        items.map((item) => <li><h3>{item.name}</h3><p>{item.text}</p>
-        <p>
-          <button onClick = {() => handler(item.name)}>DELETE</button>
-          </p>
-          </li>)
+        items.map((item) => 
+          <li><h2>{item.title}</h2>
+          <p>{item.desc}</p><br/>
+          <h3>Days Followed: {item.daysFollowed}</h3>
+          <h3>Days Skipped: {item.daysSkipped}</h3><hr/></li>
+          
+          
+
+
+        )
       }
     </ul>
     </>
   )
 }
 
+
+
 function App() {
 
   return (
     <div className="App">
-    <h1>Practice Set 5 (useEffect)</h1>
+     <h1>Practice Set 5 (useEffect)</h1>
+     <Question3/>
+
+     {/* <Question2/> */}
+    {/* <Question1/> */}
+
+    {/* <h1>Practice Set 5 (useEffect)</h1>
     <Question7/>
     <Question5/>
-    
-      <Trial/>
-      <Question2/>
-      <Question3/>
-      <Question4 heading = "User Profile" height = "400px" width = "400px" />
+    <Trial/>          //Question1
+    <Question2/>
+    <Question3/>
+    <Question4 heading = "User Profile" height = "400px" width = "400px" /> */}
       
     </div>
   );
