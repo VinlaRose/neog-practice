@@ -165,6 +165,7 @@ function Question3(){
 
   return(
     <>
+    <h2>Question3</h2>
     <ul>
       {
         items.map((item) => 
@@ -182,6 +183,228 @@ function Question3(){
     </>
   )
 }
+//---------------------------------------QUESTION 4
+
+const fakeFetch4 = (url) => {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      if (url === 'https://example.com/api/videos') {
+        resolve({
+          status: 200,
+          message: 'Success',
+          data: {
+            videos: [
+              {
+                title: 'The Power of Habit',
+                thumbnail: 'https://picsum.photos/200/130',
+                views: 1000000,
+                likes: 50000,
+              },
+              {
+                title: 'How to Code in JavaScript',
+                thumbnail: 'https://picsum.photos/200/135',
+                views: 500000,
+                likes: 25000,
+              },
+              {
+                title: '10 Minute Yoga for Beginners',
+                thumbnail: 'https://picsum.photos/200/131',
+                views: 250000,
+                likes: 15000,
+              },
+              {
+                title: 'Introduction to Machine Learning',
+                thumbnail: 'https://picsum.photos/200/132',
+                views: 100000,
+                likes: 10000,
+              },
+              {
+                title: 'The Science of Cooking',
+                thumbnail: 'https://picsum.photos/200/133',
+                views: 75000,
+                likes: 5000,
+              },
+              {
+                title: 'The Art of Public Speaking',
+                thumbnail: 'https://picsum.photos/200/134',
+                views: 50000,
+                likes: 2500,
+              },
+            ],
+          },
+        })
+      } else {
+        reject({
+          status: 404,
+          message: 'Videos not found.',
+        })
+      }
+    }, 2000)
+  })
+}
+
+function Question4(){
+   const [items, setItems] = useState([]);
+
+const getData = async() => {
+  try{
+    const response = await fakeFetch4("https://example.com/api/videos");
+    setItems(response.data.videos)
+  }catch(e){
+    console.error(e)
+  }
+}
+
+useEffect(()=>{
+  getData();
+},[])
+
+const handler = () => {
+  const filtered = items.filter((item, index) => index !== 0)
+  console.log(filtered)
+  setItems(filtered)
+}
+
+return(
+  <>
+  <h2>Question4</h2>
+  <h3>My Playlist</h3>
+  <button onClick={ handler}>Delete</button>
+  
+  <ul>
+    {
+      items.map((item) => (
+        
+        <li key = {item.title} >
+          <img src = {item.thumbnail}/>
+          <p>{item.title}</p>
+          <p>Views: {item.views}</p>
+          <p>Likes :{item.likes}</p>
+          
+
+        </li>
+      ))
+    }
+  </ul>
+  </>
+)
+}
+
+//---------------------------------------QUESTION 5
+
+export const fakeFetch5 = (url) => {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      if (url === 'https://example.com/api/posts') {
+        resolve({
+          status: 200,
+          message: 'Success',
+          data: {
+            posts: [
+              {
+                caption: 'Delicious chocolate cake recipe',
+                src: 'https://picsum.photos/300/301',
+                views: 1000,
+                likes: 100,
+                category: 'Bakery',
+              },
+              {
+                caption: '5-minute breakfast ideas',
+                src: 'https://picsum.photos/300/300',
+                views: 500,
+                likes: 50,
+                category: 'Food',
+              },
+              {
+                caption: "The best bread recipe you'll ever taste",
+                src: 'https://picsum.photos/300/302',
+                views: 2000,
+                likes: 200,
+                category: 'Bakery',
+              },
+              {
+                caption: '10 DIY home decor ideas',
+                src: 'https://picsum.photos/300/303',
+                views: 100,
+                likes: 10,
+                category: 'DIY',
+              },
+              {
+                caption: 'Healthy snacks for work',
+                src: 'https://picsum.photos/300/304',
+                views: 300,
+                likes: 30,
+                category: 'Food',
+              },
+              {
+                caption: 'How to make sourdough bread at home',
+                src: 'https://picsum.photos/300/305',
+                views: 1500,
+                likes: 150,
+                category: 'Bakery',
+              },
+            ],
+          },
+        })
+      } else {
+        reject({
+          status: 404,
+          message: 'Post not found.',
+        })
+      }
+    }, 500)
+  })
+}
+
+function Question5(){
+
+const [ items, setItems] = useState([]);
+
+const getData = async() =>{
+  try{
+    const response = await fakeFetch5('https://example.com/api/posts');
+    setItems(response.data.posts);
+    console.log(response.data.posts)
+  }catch(e){
+    console.error(e);
+  }
+}
+useEffect(()=>{
+  getData();
+},[])
+
+const handler = () => {
+const filtered = items.filter((item) => item.category === 'Bakery')
+setItems(filtered)
+}
+
+  return(
+    <>
+    <h2>Question5...</h2>
+    <button onClick = {handler}>SHow Bakery </button>
+    <ul>
+      {
+        items.map((item) => (
+          <li key = {item.title}>
+            <img src = {item.src}/>
+            <h3>{item.title}</h3>
+            <p>Category: {item.category}</p>
+            <p>Likes: {item.likes}</p>
+            <p>Views: {item.views}</p>
+            
+          </li>
+        ))
+      }
+    </ul>
+    </>
+  )
+}
+
+//---------------------------------------QUESTION 6
+
+
+
+
 
 
 
@@ -190,7 +413,12 @@ function App() {
   return (
     <div className="App">
      <h1>Practice Set 5 (useEffect)</h1>
-     <Question3/>
+     <Question5/>
+
+     {/* <Question4/> */}
+
+
+     {/* <Question3/> */}
 
      {/* <Question2/> */}
     {/* <Question1/> */}
